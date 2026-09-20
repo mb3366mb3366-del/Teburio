@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Teburio{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('index') }}">Teburio</a>
+    <nav>
+      {% if current_user %}
+        <span class="user-greeting">Hallo, {{ current_user['name'] }}</span>
+        <a href="{{ url_for('reservations') }}">Meine Reservierungen</a>
+        <a href="{{ url_for('logout') }}">Abmelden</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Anmelden</a>
+        <a href="{{ url_for('register') }}">Registrieren</a>
+      {% endif %}
+    </nav>
+  </header>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

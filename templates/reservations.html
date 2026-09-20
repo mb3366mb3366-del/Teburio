@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Meine Reservierungen – Teburio{% endblock %}
+{% block content %}
+  <section class="form-card">
+    <h1>Neue Reservierung</h1>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    <form method="post">
+      <label for="date">Datum</label>
+      <input type="date" id="date" name="date" required>
+
+      <label for="time">Uhrzeit</label>
+      <input type="time" id="time" name="time" required>
+
+      <label for="people">Personenanzahl</label>
+      <input type="number" id="people" name="people" min="1" required>
+
+      <label for="note">Anmerkung (optional)</label>
+      <textarea id="note" name="note" rows="3"></textarea>
+
+      <button type="submit">Reservieren</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Meine Reservierungen</h2>
+    {% if reservations %}
+      <table class="reservations-table">
+        <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Uhrzeit</th>
+            <th>Personen</th>
+            <th>Anmerkung</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in reservations %}
+            <tr>
+              <td>{{ r['date'] }}</td>
+              <td>{{ r['time'] }}</td>
+              <td>{{ r['people'] }}</td>
+              <td>{{ r['note'] or '–' }}</td>
+              <td>
+                <form method="post" action="{{ url_for('delete_reservation', reservation_id=r['id']) }}">
+                  <button type="submit" class="link-button">Löschen</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>Du hast noch keine Reservierungen.</p>
+    {% endif %}
+  </section>
+{% endblock %}

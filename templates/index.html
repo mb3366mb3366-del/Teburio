@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Teburio – Willkommen{% endblock %}
+{% block content %}
+  <section class="hero">
+    <h1>Willkommen bei Teburio</h1>
+    <p>Registriere dich und reserviere ganz einfach deinen Tisch.</p>
+    {% if current_user %}
+      <a class="button" href="{{ url_for('reservations') }}">Zur Reservierung</a>
+    {% else %}
+      <a class="button" href="{{ url_for('register') }}">Jetzt registrieren</a>
+      <a class="button secondary" href="{{ url_for('login') }}">Anmelden</a>
+    {% endif %}
+  </section>
+{% endblock %}
